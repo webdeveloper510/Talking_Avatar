@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
-    'myapp',
     'auth_app',
 ]
 
@@ -145,15 +144,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
-
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '/media/'
-upload_video_path = MEDIA_ROOT / 'videos'
-result_dir = BASE_DIR / 'results'
-
-
+STATICFILES_DIRS = [
+    BASE_DIR,"static"
+]
+STATIC_URL = '/static/'
+MEDIA_ROOT = BASE_DIR /"static/media"
+MEDIA_URL = "/media/"
+# BASE_URL='http://3.82.65.48:8000/static'
+BASE_URL='http://127.0.0.1:8000/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

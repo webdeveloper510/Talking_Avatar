@@ -37,7 +37,35 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-  
     def __str__(self):
         return self.email
 
+
+class Therapy(models.Model):
+    name=models.CharField(max_length=100)
+    
+    
+class TherapyTrainingData(models.Model):
+    name = models.CharField(max_length=100, null=True, blank=True)
+    questions = models.TextField()
+    answers = models.TextField()
+
+class Avatar(models.Model):
+    image = models.ImageField(upload_to="images/")
+    image_url=models.CharField(max_length=200,blank=True,null=True)
+    sample_video=models.FileField(upload_to="sample_videos")
+
+class Conversation(models.Model):
+    avatar= models.ForeignKey(Avatar,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    avatar_name = models.CharField(max_length=100, null=True, blank=True)
+    therapy= models.BigIntegerField()
+    
+class Message(models.Model):
+    conversation=models.ForeignKey(Conversation,on_delete=models.CASCADE)
+    question_text=models.TextField()
+    question_audio = models.FileField(upload_to='question_audio/')
+    answer_text=models.TextField()
+    answer_audio = models.TextField(max_length=100,null=True,blank=True)
+    answer_video=models.TextField(max_length=100,null=True,blank=True)
+   

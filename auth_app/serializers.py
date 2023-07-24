@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from auth_app.models import User
+from . models import *
 from django.contrib.auth.hashers import make_password
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -36,11 +36,42 @@ class UserLoginSerializer(serializers.ModelSerializer):
         'password': {'error_messages': {'required': "password is required",'blank':'please Enter a email'}}
         
     }
+     
+     
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=['id', 'name','email','dob','gender']        
+        fields=['id', 'name','email','dob','gender']     
+        
 
+
+class TherapySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Therapy
+        fields= '__all__'      
+
+class TherapyTrainingDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=TherapyTrainingData
+        fields= '__all__' 
+    
+class AvatarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Avatar
+        fields= '__all__' 
+        
+class ConversationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Conversation
+        fields= '__all__' 
+        
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Message
+        fields= '__all__' 
+        
+        
+        
 # class User_Update_Profile_Serializer(serializers.ModelSerializer):
 #     class Meta:
 #         model=User

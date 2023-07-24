@@ -1,14 +1,18 @@
 from django.urls import path
-from auth_app.views import *
-from auth_app import views
+from . views import RegistrationView, LoginView, AppleLoginView, ProfileView, TherapyDATA,CreateAvatar,CreateConversion
 from django.conf import settings
 from django.conf.urls.static import static
-
 urlpatterns = [
-    path('register/', RegistrationView.as_view(),name='register'),
+    path('register/', RegistrationView.as_view() ,name='register'),
     path('login/',LoginView.as_view(),name='login'),
     path('apple-login/', AppleLoginView.as_view(),name='apple-login'),
     path('user-profile/', ProfileView.as_view(),name='userprofile'),
+    path('data/', TherapyDATA.as_view()),
+    path('imageupload/',CreateAvatar.as_view()),
+    path('conversation/',CreateConversion.as_view()),
+
+    
+    
     # path('send-password-reset-email/', SendResetPasswordEmailView.as_view(), name='send-reset-password-email'),
     # path('reset-password/', ResetPasswordView.as_view(), name='reset-password'),
     # path('update-profile/', Update_profile_view.as_view(), name='auth_update_profile'),   
