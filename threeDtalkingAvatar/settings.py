@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-kiepy&pusa2%)=dy(=25ru+loe52xw^f$^i88jt7g+vbq&tp!t
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["13.53.234.84"]
 
 
 # Application definition
@@ -99,8 +100,8 @@ DATABASES = {
     'ENGINE': 'django.db.backends.mysql', 
     'NAME': 'michael1',
     'USER': 'root',
-    'PASSWORD': '',
-    # 'PASSWORD': 'admin@123',
+    # 'PASSWORD': '',
+    'PASSWORD': 'admin@123',
     'HOST': 'localhost', # Or an IP Address that your DB is hosted on
     'PORT': '3306',
     'OPTIONS': {
@@ -150,8 +151,13 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR /"static/media"
 MEDIA_URL = "/media/"
-# BASE_URL='http://3.82.65.48:8000/static'
-BASE_URL='http://127.0.0.1:8000/static'
+
+upload_video_path= MEDIA_ROOT /"sample_videos/"
+upload_audio_path= MEDIA_ROOT /"answer_audio/"
+result_dir = MEDIA_ROOT  /'output_dir/'
+
+BASE_URL='http://13.53.234.84:8080/static'
+# BASE_URL='http://127.0.0.1:8000/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

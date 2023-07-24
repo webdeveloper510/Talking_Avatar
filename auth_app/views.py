@@ -45,7 +45,9 @@ from googletrans import Translator
 translator=Translator()
 
 
-url="http://127.0.0.1:8000/static/media/"
+# url="http://127.0.0.1:8000/static/media/"
+url="http://13.53.234.84:8080/static/media/"
+
 
 
 def get_tokens_for_user(user):
@@ -168,7 +170,19 @@ class CreateConversion(APIView):
         conversation.save()
         return Response({"message":"Conversation Create Successfully"})
  
-        
+
+class get_avatar(APIView):
+    def get(self,request):
+        avatar=Avatar.objects.all().values('id','image_url')
+        avatar_id=[]
+        avatar_url=[]
+        for data in avatar:
+            if data['id'] not in avatar_id:
+                if data['image_url'] not in avatar_url:
+                    avatar_id.append(data['id'])
+                    avatar_url.append(data['image_url'])
+        return Response({'avatar_id':avatar_id,'avatar_url':avatar_url})
+    
 class TherapyDATA(APIView):
     def clean_text(self,text):
         REPLACE_BY_SPACE_RE = re.compile('[/(){}\[\]\|@,;]')     
@@ -321,14 +335,14 @@ class TherapyDATA(APIView):
 #     file_save_path = "/home/codenomad/Desktop/Talking_Avatar/Wav2Lip/results"
 
     
-# #     command = [
-# #         'python3', '/home/codenomad/Desktop/avatar_project/threeDtalkingAvatar/Wav2Lip/inference.py',
-# #         '--checkpoint_path', str(model_path),
-# #         '--face', str(video_path),
-# #         '--audio', str(audio_path),
-# #         '--outfile', str(file_save_path)
-# #     ]
-# #     subprocess.run(command)
+#     command = [
+#         'python3', '/home/codenomad/Desktop/avatar_project/threeDtalkingAvatar/Wav2Lip/inference.py',
+#         '--checkpoint_path', str(model_path),
+#         '--face', str(video_path),
+#         '--audio', str(audio_path),
+#         '--outfile', str(file_save_path)
+#     ]
+#     subprocess.run(command)
 
-# #     return 'done!'
+#     return 'done!'
 

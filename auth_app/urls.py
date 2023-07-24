@@ -1,5 +1,5 @@
 from django.urls import path
-from . views import RegistrationView, LoginView, AppleLoginView, ProfileView, TherapyDATA,CreateAvatar,CreateConversion
+from . views import RegistrationView, LoginView, AppleLoginView, ProfileView, TherapyDATA,CreateAvatar,CreateConversion,get_avatar
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -10,6 +10,8 @@ urlpatterns = [
     path('data/', TherapyDATA.as_view()),
     path('imageupload/',CreateAvatar.as_view()),
     path('conversation/',CreateConversion.as_view()),
+    path('listavatar/',get_avatar.as_view()),
+
 
     
     
