@@ -154,7 +154,14 @@ class CreateConversion(APIView):
         user_id=request.POST.get("user_id")
         avatar_name=request.POST.get("avatar_name")
         therapy_id=request.POST.get("therapy_id")
-        
+        if not avatar_id:
+            return Response({"message":"Please Enter Avatar ID"})
+        if not user_id:
+            return Response({"message":"User ID Is Must"})
+        if not avatar_name:
+            return Response({"message":"Please Enter Avata Name"})
+        if not therapy_id:
+            return Response({"message":"Please Therapy ID"})
         
         userID = User.objects.get(id=user_id)
         conversation=Conversation.objects.create(avatar_id=avatar_id ,user_id=userID.id ,avatar_name=avatar_name ,therapy=therapy_id)
