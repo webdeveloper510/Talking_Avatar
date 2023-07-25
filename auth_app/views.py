@@ -18,6 +18,10 @@ from django.shortcuts import render
 from . models import *
 from django.http import HttpResponse ,JsonResponse
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from social_django.utils import psa
+from requests.exceptions import HTTPError
 import re
 from rest_framework import status
 import nltk
@@ -133,6 +137,30 @@ class ProfileView(APIView):
                 key == ""
         return Response({"status":"200", "message":"success", "data":dict})
         
+        
+        
+@api_view(['POST'])
+@permission_classes([AllowAny])
+@psa()
+def register_by_access_token(request, backend):
+    backend = request.backend
+    print(backend)
+    token = request.data.get('access_token')
+    user = backend.do_auth(token)
+    print(request)
+    if user:
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({"token": token.key}, status=status.HTTP_200_OK)
+    else:
+        return Response({"error": "Invalid_token"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+@api_view(["GET","POST"])
+def authentication_test(request):
+    print(request.user)
+    return Response({"message":"User Successfully Created"}, status=status.HTTP_200_OK)
+    
+    
 class CreateAvatar(APIView):
     def post(self,request):
         image_file=request.FILES.get("image")
@@ -174,14 +202,15 @@ class CreateConversion(APIView):
 class get_avatar(APIView):
     def get(self,request):
         avatar=Avatar.objects.all().values('id','image_url')
-        avatar_id=[]
-        avatar_url=[]
-        for data in avatar:
-            if data['id'] not in avatar_id:
-                if data['image_url'] not in avatar_url:
-                    avatar_id.append(data['id'])
-                    avatar_url.append(data['image_url'])
-        return Response({'avatar_id':avatar_id,'avatar_url':avatar_url})
+        ArraData =[]
+        for dict in avatar:
+            ArraData.append(dict)
+        if ArraData:
+            return Response({'status':status.HTTP_200_OK,'message':'Success', 'data':ArraData})
+        else:
+            return Response({'status':status.HTTP_400_BAD_REQUEST,'message':'Bad Request'})
+                
+        
     
 class TherapyDATA(APIView):
     def clean_text(self,text):

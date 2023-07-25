@@ -16,7 +16,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password=None):
         user = self.create_user(
-            email,
+            email=email,
             password=password,
         )
         user.is_admin = True
@@ -30,6 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=30)
     dob = models.CharField(max_length=30)
     gender = models.CharField(max_length=30)
+    is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -39,6 +40,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     def __str__(self):
         return self.email
+    
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        return self.is_admin
+
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        return True
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        return self.is_admin
+
 
 
 class Therapy(models.Model):

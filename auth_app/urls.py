@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path,re_path
+from .import views
 from . views import RegistrationView, LoginView, AppleLoginView, ProfileView, TherapyDATA,CreateAvatar,CreateConversion,get_avatar
 from django.conf import settings
 from django.conf.urls.static import static
@@ -11,7 +12,9 @@ urlpatterns = [
     path('imageupload/',CreateAvatar.as_view()),
     path('conversation/',CreateConversion.as_view()),
     path('listavatar/',get_avatar.as_view()),
-
+    re_path(r'^register_access_token/social/(?P<backend>[^/]+)/$', views.register_by_access_token),
+    path('googlelogin/', views.authentication_test),
+]
 
     
     
@@ -29,7 +32,7 @@ urlpatterns = [
     # path('delete-user/<int:pk>', Delete_User_View.as_view(), name="delete-user"),
     # path('email/', email.as_view(), name='email'),
     # path('test/', views.test, name="test"),
-]
+
 
 if settings.DEBUG == True or settings.DEBUG == False:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
